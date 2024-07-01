@@ -4987,8 +4987,9 @@ namespace wi::scene
 					//script.script_hash = script.resource.GetScriptHash();
 					//std::string str = script.resource.GetScript();
 					std::string str = script.resource.GetScript();
-					entity;
-					wi::lua::AttachScriptParameters(str, script.filename, wi::lua::GeneratePID(), "\nlocal function GetEntity() return Entity_FindByName('" + Entity_GetName(entity) + "') end\n", "");
+					std::string entity_inject = "\nlocal __my_script_ent = GetScene().Entity_FindByName('" + Entity_GetName(entity)
+						+ "')\nlocal function GetEntity() return __my_script_ent end\n";
+					wi::lua::AttachScriptParameters(str, script.filename, wi::lua::GeneratePID(), entity_inject, "");
 					wi::lua::CompileText(str, script.script);
 
 					script.filename += "c";
