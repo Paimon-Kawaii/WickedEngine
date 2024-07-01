@@ -327,6 +327,8 @@ namespace wi::scene
 		// Finds the first entity by the name (if it exists, otherwise returns INVALID_ENTITY):
 		//	ancestor : you can specify an ancestor entity if you only want to find entities that are descendants of ancestor entity
 		wi::ecs::Entity Entity_FindByName(const std::string& name, wi::ecs::Entity ancestor = wi::ecs::INVALID_ENTITY);
+		// Get the entity name
+		std::string Entity_GetName(wi::ecs::Entity entity);
 		// Duplicates all of an entity's components and creates a new entity with them (recursively keeps hierarchy):
 		wi::ecs::Entity Entity_Duplicate(wi::ecs::Entity entity);
 		// Check whether entity is a descendant of ancestor

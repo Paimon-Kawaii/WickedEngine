@@ -1255,6 +1255,10 @@ namespace wi::scene
 		}
 		return INVALID_ENTITY;
 	}
+	std::string  Scene::Entity_GetName(Entity entity)
+	{
+		return names[entity].name;
+	}
 	Entity Scene::Entity_Duplicate(Entity entity)
 	{
 		wi::Archive archive;
@@ -4971,8 +4975,6 @@ namespace wi::scene
 					std::string script_extension = script.filename.substr(script.filename.find_last_of('.'));
 					if (script_extension == ".luac")
 					{
-						/*script.resource = wi::resourcemanager::Load(script.filename);
-						script.script_hash = script.resource.GetScriptHash();*/
 						script.resource = wi::resourcemanager::Load(script.filename);
 						wi::helper::FileRead(script.filename, script.script);
 					}
@@ -4985,7 +4987,8 @@ namespace wi::scene
 					//script.script_hash = script.resource.GetScriptHash();
 					//std::string str = script.resource.GetScript();
 					std::string str = script.resource.GetScript();
-					wi::lua::AttachScriptParameters(str, script.filename, wi::lua::GeneratePID(), "", "");
+					entity;
+					wi::lua::AttachScriptParameters(str, script.filename, wi::lua::GeneratePID(), "\nlocal function GetEntity() return Entity_FindByName('" + Entity_GetName(entity) + "') end\n", "");
 					wi::lua::CompileText(str, script.script);
 
 					script.filename += "c";
