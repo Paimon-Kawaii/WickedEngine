@@ -40,60 +40,60 @@ jobs:
           Editor_Windows.exe
 
   
-  linux:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
+  # linux:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        sudo apt install libsdl2-dev
+  #   - name: Install dependencies
+  #     run: |
+  #       sudo apt update
+  #       sudo apt install libsdl2-dev
 
-    - name: Build
-      run: |
-        mkdir build
-        cd build
-        cmake .. -DCMAKE_BUILD_TYPE=Release
-        make -j$(nproc)
-        echo "---Generating Shader Dump---"
-        cd WickedEngine
-        ./offlineshadercompiler spirv rebuild shaderdump
-        mv wiShaderDump.h ../../WickedEngine/
-        cd ..
-        echo "---Rebuilding with ShaderDump---"
-        make -B -j $(nproc)
+  #   - name: Build
+  #     run: |
+  #       mkdir build
+  #       cd build
+  #       cmake .. -DCMAKE_BUILD_TYPE=Release
+  #       make -j$(nproc)
+  #       echo "---Generating Shader Dump---"
+  #       cd WickedEngine
+  #       ./offlineshadercompiler spirv rebuild shaderdump
+  #       mv wiShaderDump.h ../../WickedEngine/
+  #       cd ..
+  #       echo "---Rebuilding with ShaderDump---"
+  #       make -B -j $(nproc)
 
         
-    - name: Move binaries
-      run: |
-        mv build/Editor/WickedEngineEditor ./Editor_Linux
-        mv Editor/config.ini ./
-        mv Editor/startup.lua ./
-        mv Editor/languages ./
-        mv Editor/fonts ./
+  #   - name: Move binaries
+  #     run: |
+  #       mv build/Editor/WickedEngineEditor ./Editor_Linux
+  #       mv Editor/config.ini ./
+  #       mv Editor/startup.lua ./
+  #       mv Editor/languages ./
+  #       mv Editor/fonts ./
         
-    - name: Package Editor
-      uses: actions/upload-artifact@v4
-      with:
-        name: Editor (Linux)
-        path: |
-          languages/
-          fonts/
-          config.ini
-          startup.lua
-          Editor_Linux
+  #   - name: Package Editor
+  #     uses: actions/upload-artifact@v4
+  #     with:
+  #       name: Editor (Linux)
+  #       path: |
+  #         languages/
+  #         fonts/
+  #         config.ini
+  #         startup.lua
+  #         Editor_Linux
 
-  content:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Package Content
-      uses: actions/upload-artifact@v4
-      with:
-        name: Content
-        path: |
-          Content/Documentation
-          Content/models
-          Content/scripts
-          Content/terrain
+  # content:
+  #   runs-on: windows-latest
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Package Content
+  #     uses: actions/upload-artifact@v4
+  #     with:
+  #       name: Content
+  #       path: |
+  #         Content/Documentation
+  #         Content/models
+  #         Content/scripts
+  #         Content/terrain
